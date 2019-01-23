@@ -12,6 +12,7 @@ export interface ScrollComponentProps {
     };
     isHorizontal?: boolean;
     renderFooter?: () => JSX.Element | JSX.Element[] | null;
+    renderHeader?: () => JSX.Element | JSX.Element[] | null;
     scrollThrottle?: number;
     useWindowScroll?: boolean;
     onLayout?: any;

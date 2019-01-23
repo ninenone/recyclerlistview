@@ -3,7 +3,7 @@ import ContextProvider from "./dependencies/ContextProvider";
 import DataProvider from "./dependencies/DataProvider";
 import { BaseLayoutProvider } from "./dependencies/LayoutProvider";
 import { Layout } from "./layoutmanager/LayoutManager";
-import BaseScrollView, { ScrollEvent, ScrollViewDefaultProps } from "./scrollcomponent/BaseScrollView";
+import BaseScrollView, { ScrollViewDefaultProps } from "./scrollcomponent/BaseScrollView";
 import { TOnItemStatusChanged } from "./ViewabilityTracker";
 import VirtualRenderer, { RenderStack } from "./VirtualRenderer";
 import ItemAnimator from "./ItemAnimator";
@@ -34,12 +34,13 @@ export interface RecyclerListViewProps {
     contextProvider?: ContextProvider;
     renderAheadOffset?: number;
     isHorizontal?: boolean;
-    onScroll?: (rawEvent: ScrollEvent, offsetX: number, offsetY: number) => void;
+    onScroll?: any;
     onRecreate?: (params: OnRecreateParams) => void;
     onEndReached?: () => void;
     onEndReachedThreshold?: number;
     onVisibleIndexesChanged?: TOnItemStatusChanged;
     renderFooter?: () => JSX.Element | JSX.Element[] | null;
+    renderHeader?: () => JSX.Element | JSX.Element[] | null;
     externalScrollView?: {
         new (props: ScrollViewDefaultProps): BaseScrollView;
     };

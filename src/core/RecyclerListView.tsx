@@ -88,12 +88,13 @@ export interface RecyclerListViewProps {
     contextProvider?: ContextProvider;
     renderAheadOffset?: number;
     isHorizontal?: boolean;
-    onScroll?: (rawEvent: ScrollEvent, offsetX: number, offsetY: number) => void;
+    onScroll?: any; // (rawEvent: ScrollEvent, offsetX: number, offsetY: number) => void;
     onRecreate?: (params: OnRecreateParams) => void;
     onEndReached?: () => void;
     onEndReachedThreshold?: number;
     onVisibleIndexesChanged?: TOnItemStatusChanged;
     renderFooter?: () => JSX.Element | JSX.Element[] | null;
+    renderHeader?: () => JSX.Element | JSX.Element[] | null;
     externalScrollView?: { new(props: ScrollViewDefaultProps): BaseScrollView };
     initialOffset?: number;
     initialRenderIndex?: number;
@@ -622,6 +623,8 @@ RecyclerListView.propTypes = {
 
     //Provide this method if you want to render a footer. Helpful in showing a loader while doing incremental loads.
     renderFooter: PropTypes.func,
+
+    renderHeader: PropTypes.func,
 
     //Specify the initial item index you want rendering to start from. Preferred over initialOffset if both are specified.
     initialRenderIndex: PropTypes.number,

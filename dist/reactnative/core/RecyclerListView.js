@@ -515,6 +515,7 @@ RecyclerListView.propTypes = {
     onVisibleIndexesChanged: PropTypes.func,
     //Provide this method if you want to render a footer. Helpful in showing a loader while doing incremental loads.
     renderFooter: PropTypes.func,
+    renderHeader: PropTypes.func,
     //Specify the initial item index you want rendering to start from. Preferred over initialOffset if both are specified.
     initialRenderIndex: PropTypes.number,
     //iOS only. Scroll throttle duration.

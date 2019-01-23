@@ -23,10 +23,9 @@ var DefaultWebItemAnimator = /** @class */ (function () {
         var _this = this;
         if (fromX !== toX || fromY !== toY) {
             var element_1 = itemRef;
-            if (!this.shouldAnimateOnce ||
-                (this.shouldAnimateOnce && !this._hasAnimatedOnce)) {
+            if (!this.shouldAnimateOnce || this.shouldAnimateOnce && !this._hasAnimatedOnce) {
                 var transitionEndCallback_1 = function (event) {
-                    element_1.style.transition = "null";
+                    element_1.style.transition = "";
                     element_1.removeEventListener("transitionend", transitionEndCallback_1);
                     _this._hasAnimatedOnce = true;
                 };

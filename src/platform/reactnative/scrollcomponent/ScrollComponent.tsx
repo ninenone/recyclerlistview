@@ -4,6 +4,7 @@ import {
     NativeScrollEvent,
     NativeSyntheticEvent,
     ScrollView,
+    Animated,
     View,
 } from "react-native";
 import BaseScrollComponent, { ScrollComponentProps } from "../../../core/scrollcomponent/BaseScrollComponent";
@@ -18,7 +19,7 @@ export default class ScrollComponent extends BaseScrollComponent {
     public static defaultProps = {
         contentHeight: 0,
         contentWidth: 0,
-        externalScrollView: TSCast.cast(ScrollView), //TSI
+        externalScrollView: TSCast.cast(Animated.ScrollView), //TSI
         isHorizontal: false,
         scrollThrottle: 16,
     };
@@ -61,9 +62,10 @@ export default class ScrollComponent extends BaseScrollComponent {
                 scrollEventThrottle={this.props.scrollThrottle}
                 {...this.props}
                 horizontal={this.props.isHorizontal}
-                onScroll={this._onScroll}
+                onScroll={this.props.onScroll as any}
                 onLayout={(!this._isSizeChangedCalledOnce || this.props.canChangeSize) ? this._onLayout : this.props.onLayout}>
                 <View style={{ flexDirection: this.props.isHorizontal ? "row" : "column" }}>
+                    {this.props.renderHeader ? this.props.renderHeader() : null}
                     <View style={{
                         height: this.props.contentHeight,
                         width: this.props.contentWidth,
@@ -78,11 +80,11 @@ export default class ScrollComponent extends BaseScrollComponent {
 
     private _getScrollViewRef = (scrollView: any) => { this._scrollViewRef = scrollView as (ScrollView | null); };
 
-    private _onScroll = (event?: NativeSyntheticEvent<NativeScrollEvent>): void => {
-        if (event) {
-            this.props.onScroll(event.nativeEvent.contentOffset.x, event.nativeEvent.contentOffset.y, event);
-        }
-    }
+    // private _onScroll = (event?: NativeSyntheticEvent<NativeScrollEvent>): void => {
+    //     if (event) {
+    //         this.props.onScroll(event.nativeEvent.contentOffset.x, event.nativeEvent.contentOffset.y, event);
+    //     }
+    // }
 
     private _onLayout = (event: LayoutChangeEvent): void => {
         if (this._height !== event.nativeEvent.layout.height || this._width !== event.nativeEvent.layout.width) {
