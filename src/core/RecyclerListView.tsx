@@ -338,7 +338,7 @@ export default class RecyclerListView<P extends RecyclerListViewProps, S extends
                 ref={(scrollComponent) => this._scrollComponent = scrollComponent as BaseScrollComponent | null}
                 {...this.props}
                 {...this.props.scrollViewProps}
-                onScroll={this._onScroll}
+                onScroll={this.props.onScroll}
                 onSizeChanged={this._onSizeChanged}
                 contentHeight={this._initComplete ? this._virtualRenderer.getLayoutDimension().height : 0}
                 contentWidth={this._initComplete ? this._virtualRenderer.getLayoutDimension().width : 0}>
@@ -548,15 +548,15 @@ export default class RecyclerListView<P extends RecyclerListViewProps, S extends
         return renderedItems;
     }
 
-    private _onScroll = (offsetX: number, offsetY: number, rawEvent: ScrollEvent): void => {
-        //Adjusting offsets using distanceFromWindow
-        this._virtualRenderer.updateOffset(offsetX - this.props.distanceFromWindow!, offsetY - this.props.distanceFromWindow!);
+    // private _onScroll = (offsetX: number, offsetY: number, rawEvent: ScrollEvent): void => {
+    //     //Adjusting offsets using distanceFromWindow
+    //     this._virtualRenderer.updateOffset(offsetX - this.props.distanceFromWindow!, offsetY - this.props.distanceFromWindow!);
 
-        if (this.props.onScroll) {
-            this.props.onScroll(rawEvent, offsetX, offsetY);
-        }
-        this._processOnEndReached();
-    }
+    //     if (this.props.onScroll) {
+    //         this.props.onScroll(rawEvent, offsetX, offsetY);
+    //     }
+    //     this._processOnEndReached();
+    // }
 
     private _processOnEndReached(): void {
         if (this.props.onEndReached && this._virtualRenderer) {
