@@ -159,6 +159,14 @@ var RecyclerListView = /** @class */ (function (_super) {
             }
             _this._queueStateRefresh();
         };
+        _this._onScroll = function (offsetX, offsetY, rawEvent) {
+            //Adjusting offsets using distanceFromWindow
+            _this._virtualRenderer.updateOffset(offsetX - _this.props.distanceFromWindow, offsetY - _this.props.distanceFromWindow);
+            if (_this.props.onScroll) {
+                _this.props.onScroll(rawEvent, offsetX, offsetY);
+            }
+            _this._processOnEndReached();
+        };
         _this._virtualRenderer = new VirtualRenderer_1.default(_this._renderStackWhenReady, function (offset) {
             _this._pendingScrollToOffset = offset;
         }, function (index) {
@@ -317,7 +325,7 @@ var RecyclerListView = /** @class */ (function (_super) {
         //     rowRenderer,
         //     ...props,
         // } = this.props;
-        return (React.createElement(ScrollComponent_1.default, __assign({ ref: function (scrollComponent) { return _this._scrollComponent = scrollComponent; } }, this.props, this.props.scrollViewProps, { onScroll: this.props.onScroll, onSizeChanged: this._onSizeChanged, contentHeight: this._initComplete ? this._virtualRenderer.getLayoutDimension().height : 0, contentWidth: this._initComplete ? this._virtualRenderer.getLayoutDimension().width : 0 }), this._generateRenderStack()));
+        return (React.createElement(ScrollComponent_1.default, __assign({ ref: function (scrollComponent) { return _this._scrollComponent = scrollComponent; } }, this.props, this.props.scrollViewProps, { onScroll: this._onScroll, onSizeChanged: this._onSizeChanged, contentHeight: this._initComplete ? this._virtualRenderer.getLayoutDimension().height : 0, contentWidth: this._initComplete ? this._virtualRenderer.getLayoutDimension().width : 0 }), this._generateRenderStack()));
     };
     RecyclerListView.prototype.getVirtualRenderer = function () {
         return this._virtualRenderer;
@@ -443,14 +451,6 @@ var RecyclerListView = /** @class */ (function (_super) {
         }
         return renderedItems;
     };
-    // private _onScroll = (offsetX: number, offsetY: number, rawEvent: ScrollEvent): void => {
-    //     //Adjusting offsets using distanceFromWindow
-    //     this._virtualRenderer.updateOffset(offsetX - this.props.distanceFromWindow!, offsetY - this.props.distanceFromWindow!);
-    //     if (this.props.onScroll) {
-    //         this.props.onScroll(rawEvent, offsetX, offsetY);
-    //     }
-    //     this._processOnEndReached();
-    // }
     RecyclerListView.prototype._processOnEndReached = function () {
         if (this.props.onEndReached && this._virtualRenderer) {
             var layout = this._virtualRenderer.getLayoutDimension();

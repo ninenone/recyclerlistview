@@ -62,7 +62,7 @@ export default class ScrollComponent extends BaseScrollComponent {
                 scrollEventThrottle={this.props.scrollThrottle}
                 {...this.props}
                 horizontal={this.props.isHorizontal}
-                onScroll={this.props.onScroll as any}
+                onScroll={Animated.event([(this.props as any).animatedEvent], {listener: this._onScroll as any})}
                 onLayout={(!this._isSizeChangedCalledOnce || this.props.canChangeSize) ? this._onLayout : this.props.onLayout}>
                 <View style={{ flexDirection: this.props.isHorizontal ? "row" : "column" }}>
                     {this.props.renderHeader ? this.props.renderHeader() : null}
@@ -80,11 +80,11 @@ export default class ScrollComponent extends BaseScrollComponent {
 
     private _getScrollViewRef = (scrollView: any) => { this._scrollViewRef = scrollView as (ScrollView | null); };
 
-    // private _onScroll = (event?: NativeSyntheticEvent<NativeScrollEvent>): void => {
-    //     if (event) {
-    //         this.props.onScroll(event.nativeEvent.contentOffset.x, event.nativeEvent.contentOffset.y, event);
-    //     }
-    // }
+    private _onScroll = (event?: NativeSyntheticEvent<NativeScrollEvent>): void => {
+        if (event) {
+            this.props.onScroll(event.nativeEvent.contentOffset.x, event.nativeEvent.contentOffset.y, event);
+        }
+    }
 
     private _onLayout = (event: LayoutChangeEvent): void => {
         if (this._height !== event.nativeEvent.layout.height || this._width !== event.nativeEvent.layout.width) {

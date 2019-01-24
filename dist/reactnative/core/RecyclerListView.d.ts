@@ -116,5 +116,6 @@ export default class RecyclerListView<P extends RecyclerListViewProps, S extends
     private _onViewContainerSizeChange;
     private _checkExpectedDimensionDiscrepancy;
     private _generateRenderStack;
+    private _onScroll;
     private _processOnEndReached;
 }
